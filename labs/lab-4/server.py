@@ -89,4 +89,4 @@ with app.app_context():
     print(f"\n\n----------- Courses Table")
     courses = db.session.execute(text(query_2))
     for course in courses:
-    print(course)
+      print(course)
