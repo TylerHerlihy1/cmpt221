@@ -12,9 +12,23 @@ from db.schema.user import User
 def index():
     return render_template('index.html')
 
-@app.route('/signup')
+@app.route('/signup', methods= ['POST', 'GET'] ) 
 def signup():
+    if request.method == 'POST':
+        query = f"""INSERT INTO "Users" ("FirstName", "LastName", "Email", "PhoneNumber", "Password")
+                    VALUES ('{request.form["FirstName"] }',
+                            '{request.form["LastName"]}',
+                            '{request. form["Email"]}',
+                            '{request. form ["PhoneNumber"] }',
+                            '{request.form["Password"] }'
+                            );"""
+        
+        with app.app_context():
+            db.session.execute(text(query))
+            db.session.commit()
+        return redirect(url_for(index))
     return render_template('signup.html')
+
 
 @app.route('/login')
 def login():
@@ -37,4 +51,3 @@ def users():
 if __name__ == "__main__":
     # debug refreshes your application with your new changes every time you save
     app.run(debug=True)
-
